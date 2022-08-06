@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+    <head>
+        <title>あ</title>
+    </head>
+    <body>
+        <div class="header">
+            <h1>フラグちゃんの動画</h1>
+        </div>
+
+        <div class="container">
+                {% for i in flag %}
+                    <iframe width="560" height="315" src={{i}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {% endfor %}
+        </div>
+
+    </body>
+</html>
