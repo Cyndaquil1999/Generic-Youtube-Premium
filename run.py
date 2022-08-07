@@ -13,7 +13,8 @@ def getid():
 
 @app.route('/download_movie',methods=["GET"])
 def download_movie():
-    download.main(request.args.get("link"))
+    download.main(request.args.get("url"))
+    return "DLちう"
 
 if __name__ == '__main__':
     app.run()
