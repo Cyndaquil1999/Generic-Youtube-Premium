@@ -1,7 +1,7 @@
 # Generic Youtube Premium
 YoutubePremiumの一部機能（DL, 動画視聴）をTwitterIDを入力することで可能にしたアプリ
 
-##　環境
+## 環境
 - Python 3.8.10
 - flask 2.2.1
 - youtube-dl 2021.12.17
@@ -11,7 +11,7 @@ YoutubePremiumの一部機能（DL, 動画視聴）をTwitterIDを入力する�
 - Ubuntu 20.04
 - MacOS 12.2.1
 
-###　構成
+### 構成
 > .
 ├── README.md
 ├── download.py
