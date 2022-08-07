@@ -1,5 +1,6 @@
 # Generic Youtube Premium
 YoutubePremiumの一部機能（DL, 動画視聴）をTwitterIDを入力することで可能にしたアプリ
+なお、DLについては問題ない（https://japan.zdnet.com/article/35162547/）
 
 ## 環境
 - Python 3.8.10
