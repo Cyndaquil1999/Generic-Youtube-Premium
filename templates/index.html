@@ -5,14 +5,15 @@
         <title>あ</title>
     </head>
     <body>
-        <div class="header">
-            <h1>フラグちゃんの動画</h1>
+        <div id="header">
+            <h1>あ</h1>
         </div>
 
-        <div class="container">
-                {% for i in flag %}
-                    <iframe width="560" height="315" src={{i}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                {% endfor %}
+        <div>
+            <form action="/getid" method="GET">
+                <input type="text" name="id" placeholder="@はいらないよ？">
+                <input type="submit" value="送信">
+            </form>
         </div>
 
     </body>
