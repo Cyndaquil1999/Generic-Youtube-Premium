@@ -12,7 +12,9 @@ YoutubePremiumの一部機能（DL, 動画視聴）をTwitterIDを入力する�
 - MacOS 12.2.1
 
 ### 構成
-> .
+
+```
+.
 ├── README.md
 ├── download.py
 ├── run.py
@@ -25,5 +27,5 @@ YoutubePremiumの一部機能（DL, 動画視聴）をTwitterIDを入力する�
 │   └── test.html
 ├── twitterAPI.py
 └── twitterAPI2.py
-
+```
 
