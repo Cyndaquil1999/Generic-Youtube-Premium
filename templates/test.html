@@ -16,17 +16,21 @@
                 <input type="submit" value="送信">
             </form>
             <div id="movies">
-                {% for i in flag %}
-                    <div class="content">
-                        <div class="iframeWrap">
-                            <iframe width="560" height="315" src={{i}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {% if flag |length == 0%}
+                        <p>Youtubeの動画リンクが見つかりませんでした</p>
+                {% else %}
+                    {% for i in flag %}
+                        <div class="content">
+                            <div class="iframeWrap">
+                                <iframe width="560" height="315" src={{i}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <form action="/download_movie" method="GET" target="_blank">
+                                <input type="hidden" name="url" value = {{i}} readonly="readonly">
+                                <input type="submit" value="DL">
+                            </form>
                         </div>
-                        <form action="/download_movie" method="GET" target="_blank">
-                            <input type="text" name="url" value = {{i}}>
-                            <input type="submit" value="DL">
-                        </form>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
 

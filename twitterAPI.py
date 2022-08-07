@@ -1,10 +1,11 @@
+from concurrent.futures import ThreadPoolExecutor
 import requests, os, json, re, time
 
 #Bearer Token
 #何故かos.environにない
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAEqffgEAAAAA0tG4A4CYDOMO90xhKX62re4sDUg%3DM2ZEwCaf94QEtOUdG0DdLXrgySiPDvr8RRN1FxtOaHjN3CDDYC"
 #bearer_token = os.environ.get("BEARER_TOKEN")
-max_results = 10
+max_results = 100
 
 class collect_userid:
     def create_url(user):
@@ -77,26 +78,49 @@ def get_url(a_dict):
     #埋め込みするときにいらない部分をこれに置き換える
     pattern_replace = "embed/"
     #つべのurlだけをしょっぴく正規表現。後ろの方のはいらないのでカット
-    pattern_youtube_url = "(https://www.youtube.com/watch\?v=[\w\-]*)"
+    pattern_youtube_url = "(https://www.youtube.com/watch\?v=[\w]*)"
     #つべのurlを入れるリスト
     urls = []
+    tmp_list = []
+    
+    video_count = 0
+    print(a_dict)
     for i in a_dict["data"]:
-        tweet_urls = re.findall(pattern_url, str(i["text"]))
-        #最後のurlは取得したツイートのurl。絶対使わないのでそれ以外をurlsにぶち込む
-        for j in range(len(tweet_urls) - 1):
-            check_url = re.search(pattern_youtube_url,requests.get(tweet_urls[j]).url)
-            print(check_url)
-            if str(check_url) != "None":
-                #つべの動画だったら埋め込み用の型式に整形する
-                urls.append(re.sub(pattern_remove,pattern_replace,str(check_url.group())))
+        #print(i["text"])
+        tmp_list += re.findall(pattern_url, str(i["text"]))
+        #print("tweet_urls: {}".format(tweet_urls))
+        
+    #print(tmp_list)
+    
+    #短縮リンクを元に戻すためにgetをしている
+    #ここがボトルネックなので、並列処理を行う
+    #100件検索の参考値: 65sec(並列処理前)→5.44sec(並列処理実装後)
+    
+    with ThreadPoolExecutor(50) as exe:
+        check_url = list(exe.map(requests.get, tmp_list))
+        
+    with ThreadPoolExecutor(50) as exe:
+        check_url = list(exe.map(lambda x: x.url, check_url))
+    
+    #print(check_url)
+    
+    for j in range(len(check_url)):
+        if video_count == 10:
+            break
+        #youtubeの動画リンクは実は長さ60固定で、頭から30文字見れば判定できてしまう
+        if check_url[j][:30] == "https://www.youtube.com/watch?":
+            #print(check_url[j], len(check_url[j]))
+            video_count += 1
+            urls.append(re.sub(pattern_remove, pattern_replace, check_url[j][:43]))
+    print(urls)
     return urls
 
 def main(id):
     #uidは事前に求めるようにしたので、それを直接入れるように変えてみた
     url = make_url(id)
-    json_response = connect_to_endpoint(url)
-    tmp = json_response["data"]
+    json_response = connect_to_endpoint(url)  
     urls = get_url(json_response)
+    print(urls)
     return urls
 
 
