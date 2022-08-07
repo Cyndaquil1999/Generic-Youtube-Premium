@@ -70,6 +70,7 @@ def connect_to_endpoint(url):
 a_dict:取得したツイートが入った辞書
 urls:つべのurlを入れたリスト
 """
+
 def get_url(a_dict):
     #全ての短縮urlをしょっぴく正規表現
     pattern_url = "(https://t.co/[\w]*)"
@@ -84,7 +85,6 @@ def get_url(a_dict):
     tmp_list = []
     
     video_count = 0
-    print(a_dict)
     for i in a_dict["data"]:
         #print(i["text"])
         tmp_list += re.findall(pattern_url, str(i["text"]))
@@ -112,7 +112,7 @@ def get_url(a_dict):
             #print(check_url[j], len(check_url[j]))
             video_count += 1
             urls.append(re.sub(pattern_remove, pattern_replace, check_url[j][:43]))
-    print(urls)
+            
     return urls
 
 def main(id):
