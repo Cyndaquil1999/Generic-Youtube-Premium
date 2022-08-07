@@ -2,7 +2,7 @@ import requests, os, json, re, time
 
 #Bearer Token
 #何故かos.environにない
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAEqffgEAAAAA0tG4A4CYDOMO90xhKX62re4sDUg%3DM2ZEwCaf94QEtOUdG0DdLXrgySiPDvr8RRN1FxtOaHjN3CDDYC"
+bearer_token = "BEARER_TOKEN"
 #bearer_token = os.environ.get("BEARER_TOKEN")
 max_results = 10
 
